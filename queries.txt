@@ -1,0 +1,218 @@
+1.
+mutation{
+  createProduct(input:{
+    name:"widget 23",
+    description:"another",
+    price:40.99,
+    soldout:false,
+    stores:[
+    {
+      store:"loss angels"
+    }
+  ,
+          {
+      store:"goa"
+    }
+    
+  ]
+    
+  }) {
+    price,
+    name,
+    description,
+    id
+  }
+}
+
+
+{
+  "data": {
+    "createProduct": {
+      "price": 40.99,
+      "name": "widget 23",
+      "description": "another",
+      "id": "2f1a43d595dcf65c432f"
+    }
+  }
+}
+
+
+2.
+query{
+  getProduct(id: "2f1a43d595dcf65c432f") {
+    price
+    name
+    description
+  }
+
+}
+
+{
+  "data": {
+    "getProduct": {
+      "price": 40.99,
+      "name": "widget 23",
+      "description": "another"
+    }
+  }
+}
+
+
+3.
+mutation{
+  updateProduct(input:{
+    id:"69c169b78fd38d33e8e2953e"
+    price:60.99
+    stores: [
+      {store:"orlandor"},
+      {store: "Los Angels"}
+    ]
+  })
+  {
+    price
+    name
+  }
+}
+//output
+{
+  "data": {
+    "updateProduct": {
+      "price": 60.99,
+      "name": "shovel 45"
+    }
+  }
+}
+
+4.
+mutation{
+  deleteProduct(id:"69c169b78fd38d33e8e2953e")
+}
+
+{
+  "data": {
+    "deleteProduct": "Widget Successfully deleted"
+  }
+}
+
+5.
+query{
+  getAllProducts{
+    name 
+    price
+    inventory
+  }
+}
+{
+  "data": {
+    "getAllProducts": [
+      {
+        "name": "widget6",
+        "price": 54.99,
+        "inventory": 10
+      },
+      {
+        "name": "shovel 989",
+        "price": 12.99,
+        "inventory": 30
+      }
+    ]
+  }
+}
+
+6.
+query{
+  widgetone: getProduct(id:"69c1682a23392c051c863fae"){
+    name
+    price
+    description
+  }
+  getProductTwo: getProduct(id:"69c15e3aa648c79772b654d5"){
+    name
+    inventory
+  }
+}
+
+{
+  "data": {
+    "widgetone": {
+      "name": "shovel 989",
+      "price": 12.99,
+      "description": "another shovel"
+    },
+    "getProductTwo": {
+      "name": "widget6",
+      "inventory": 10
+    }
+  }
+}
+
+7.
+query{
+  widgetone: getProduct(id:"69c1682a23392c051c863fae"){
+   ...productFragment
+  }
+  getProductTwo: getProduct(id:"69c15e3aa648c79772b654d5"){
+   ...productFragment
+  }
+}
+
+fragment productFragment on Product{
+    name
+    price
+    description
+}
+
+{
+  "data": {
+    "widgetone": {
+      "name": "shovel 989",
+      "price": 12.99,
+      "description": "another shovel"
+    },
+    "getProductTwo": {
+      "name": "widget6",
+      "price": 54.99,
+      "description": "another"
+    }
+  }
+}
+
+8.
+query{
+  widgetone: getProduct(id:"69c1682a23392c051c863fae"){
+   ...productFragment
+  }
+  getProductTwo:getAllProducts{
+   ...productFragment
+  }
+}
+
+fragment productFragment on Product{
+    name
+    price
+    description
+}
+
+{
+  "data": {
+    "widgetone": {
+      "name": "shovel 989",
+      "price": 12.99,
+      "description": "another shovel"
+    },
+    "getProductTwo": [
+      {
+        "name": "widget6",
+        "price": 54.99,
+        "description": "another"
+      },
+      {
+        "name": "shovel 989",
+        "price": 12.99,
+        "description": "another shovel"
+      }
+    ]
+  }
+}
+
+
